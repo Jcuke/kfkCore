@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AdMapper" >
+    <resultMap id="BaseResultMap" type="com.jp.mmlbk.base.model.Ad" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="Title" property="title" jdbcType="VARCHAR" />
+        <result column="Summary" property="summary" jdbcType="VARCHAR" />
+        <result column="Content" property="content" jdbcType="LONGVARCHAR" />
+        <result column="PcImgPath" property="pcimgpath" jdbcType="VARCHAR" />
+        <result column="AppImgPath" property="appimgpath" jdbcType="VARCHAR" />
+        <result column="IsTop" property="istop" jdbcType="TINYINT" />
+        <result column="IsLink" property="islink" jdbcType="TINYINT" />
+        <result column="Sort" property="sort" jdbcType="TINYINT" />
+        <result column="IsDeleted" property="isdeleted" jdbcType="TINYINT" />
+        <result column="StartTime" property="starttime" jdbcType="INTEGER" />
+        <result column="EndTime" property="endtime" jdbcType="INTEGER" />
+        <result column="CreateUID" property="createuid" jdbcType="INTEGER" />
+        <result column="CreateTime" property="createtime" jdbcType="INTEGER" />
+        <result column="UpdateUID" property="updateuid" jdbcType="INTEGER" />
+        <result column="UpdateTime" property="updatetime" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `ID`, `Title`, `Summary`, `Content`, `PcImgPath`, `AppImgPath`, `IsTop`, `IsLink`, 
+        `Sort`, `IsDeleted`, `StartTime`, `EndTime`, `CreateUID`, `CreateTime`, `UpdateUID`, 
+        `UpdateTime`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from ad
+        where `ID` = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.jp.mmlbk.base.model.Ad" >
+        select 
+<include refid="Base_Column_List" /> 
+from ad
+        <where >
+            <include refid="condition" />
+        </where>
+        <if test="orderBy!=null" >
+            order by ${orderBy}
+        </if>
+        <if test="orderBy!=null and sortBy!=null" >
+            ${sortBy} 
+        </if>
+        <if test="beginRow!=null and pageSize!=null" >
+            limit #{beginRow},#{pageSize}
+        </if>
+    </select>
+
+    <select id="selectCountByModel" resultType="java.lang.Integer" parameterType="com.jp.mmlbk.base.model.Ad" >
+        select  count(1) 
+        from ad
+        <where >
+            <include refid="condition" />
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.jp.mmlbk.base.model.Ad" >
+        insert into ad (`ID`, `Title`, `Summary`, 
+            `Content`, `PcImgPath`, `AppImgPath`, 
+            `IsTop`, `IsLink`, `Sort`, 
+            `IsDeleted`, `StartTime`, `EndTime`, 
+            `CreateUID`, `CreateTime`, `UpdateUID`, 
+            `UpdateTime`)
+        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+            #{content,jdbcType=LONGVARCHAR}, #{pcimgpath,jdbcType=VARCHAR}, #{appimgpath,jdbcType=VARCHAR}, 
+            #{istop,jdbcType=TINYINT}, #{islink,jdbcType=TINYINT}, #{sort,jdbcType=TINYINT}, 
+            #{isdeleted,jdbcType=TINYINT}, #{starttime,jdbcType=INTEGER}, #{endtime,jdbcType=INTEGER}, 
+            #{createuid,jdbcType=INTEGER}, #{createtime,jdbcType=INTEGER}, #{updateuid,jdbcType=INTEGER}, 
+            #{updatetime,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.jp.mmlbk.base.model.Ad" >
+        insert into ad
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                `ID`,
+            </if>
+            <if test="title != null" >
+                `Title`,
+            </if>
+            <if test="summary != null" >
+                `Summary`,
+            </if>
+            <if test="content != null" >
+                `Content`,
+            </if>
+            <if test="pcimgpath != null" >
+                `PcImgPath`,
+            </if>
+            <if test="appimgpath != null" >
+                `AppImgPath`,
+            </if>
+            <if test="istop != null" >
+                `IsTop`,
+            </if>
+            <if test="islink != null" >
+                `IsLink`,
+            </if>
+            <if test="sort != null" >
+                `Sort`,
+            </if>
+            <if test="isdeleted != null" >
+                `IsDeleted`,
+            </if>
+            <if test="starttime != null" >
+                `StartTime`,
+            </if>
+            <if test="endtime != null" >
+                `EndTime`,
+            </if>
+            <if test="createuid != null" >
+                `CreateUID`,
+            </if>
+            <if test="createtime != null" >
+                `CreateTime`,
+            </if>
+            <if test="updateuid != null" >
+                `UpdateUID`,
+            </if>
+            <if test="updatetime != null" >
+                `UpdateTime`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null" >
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null" >
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="pcimgpath != null" >
+                #{pcimgpath,jdbcType=VARCHAR},
+            </if>
+            <if test="appimgpath != null" >
+                #{appimgpath,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null" >
+                #{istop,jdbcType=TINYINT},
+            </if>
+            <if test="islink != null" >
+                #{islink,jdbcType=TINYINT},
+            </if>
+            <if test="sort != null" >
+                #{sort,jdbcType=TINYINT},
+            </if>
+            <if test="isdeleted != null" >
+                #{isdeleted,jdbcType=TINYINT},
+            </if>
+            <if test="starttime != null" >
+                #{starttime,jdbcType=INTEGER},
+            </if>
+            <if test="endtime != null" >
+                #{endtime,jdbcType=INTEGER},
+            </if>
+            <if test="createuid != null" >
+                #{createuid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null" >
+                #{createtime,jdbcType=INTEGER},
+            </if>
+            <if test="updateuid != null" >
+                #{updateuid,jdbcType=INTEGER},
+            </if>
+            <if test="updatetime != null" >
+                #{updatetime,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.jp.mmlbk.base.model.Ad" >
+        update ad
+        <set >
+            <if test="title != null" >
+                `Title` = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null" >
+                `Summary` = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                `Content` = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="pcimgpath != null" >
+                `PcImgPath` = #{pcimgpath,jdbcType=VARCHAR},
+            </if>
+            <if test="appimgpath != null" >
+                `AppImgPath` = #{appimgpath,jdbcType=VARCHAR},
+            </if>
+            <if test="istop != null" >
+                `IsTop` = #{istop,jdbcType=TINYINT},
+            </if>
+            <if test="islink != null" >
+                `IsLink` = #{islink,jdbcType=TINYINT},
+            </if>
+            <if test="sort != null" >
+                `Sort` = #{sort,jdbcType=TINYINT},
+            </if>
+            <if test="isdeleted != null" >
+                `IsDeleted` = #{isdeleted,jdbcType=TINYINT},
+            </if>
+            <if test="starttime != null" >
+                `StartTime` = #{starttime,jdbcType=INTEGER},
+            </if>
+            <if test="endtime != null" >
+                `EndTime` = #{endtime,jdbcType=INTEGER},
+            </if>
+            <if test="createuid != null" >
+                `CreateUID` = #{createuid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null" >
+                `CreateTime` = #{createtime,jdbcType=INTEGER},
+            </if>
+            <if test="updateuid != null" >
+                `UpdateUID` = #{updateuid,jdbcType=INTEGER},
+            </if>
+            <if test="updatetime != null" >
+                `UpdateTime` = #{updatetime,jdbcType=INTEGER},
+            </if>
+        </set>
+        where `ID` = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from ad
+        where `ID` = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <sql id="condition" >
+        <if test="title != null" >
+             and `Title` = #{title}
+        </if>
+        <if test="summary != null" >
+             and `Summary` = #{summary}
+        </if>
+        <if test="content != null" >
+             and `Content` = #{content}
+        </if>
+        <if test="pcimgpath != null" >
+             and `PcImgPath` = #{pcimgpath}
+        </if>
+        <if test="appimgpath != null" >
+             and `AppImgPath` = #{appimgpath}
+        </if>
+        <if test="istop != null" >
+             and `IsTop` = #{istop}
+        </if>
+        <if test="islink != null" >
+             and `IsLink` = #{islink}
+        </if>
+        <if test="sort != null" >
+             and `Sort` = #{sort}
+        </if>
+        <if test="isdeleted != null" >
+             and `IsDeleted` = #{isdeleted}
+        </if>
+        <if test="starttime != null" >
+             and `StartTime` = #{starttime}
+        </if>
+        <if test="endtime != null" >
+             and `EndTime` = #{endtime}
+        </if>
+        <if test="createuid != null" >
+             and `CreateUID` = #{createuid}
+        </if>
+        <if test="createtime != null" >
+             and `CreateTime` = #{createtime}
+        </if>
+        <if test="updateuid != null" >
+             and `UpdateUID` = #{updateuid}
+        </if>
+        <if test="updatetime != null" >
+             and `UpdateTime` = #{updatetime}
+        </if>
+    </sql>
+
+</mapper>
